@@ -1,27 +1,191 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body{
+  background: linear-gradient(0deg, #DEDFE2, #DEDFE2),
+linear-gradient(0deg, #FFFFFF, #FFFFFF);
+overflow-x: hidden;
+/* position: relative;
+overflow-x: hidden; */
+width: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+.navbar-toggler{
+  border: none;
+}
+.button{
+  width: fit-content;
+}
+/* signin-button */
+.button {
+  background-color: rgb(3, 3, 211); 
+  border:1px rgb(3, 3, 211);
+  border-radius: 4px;
+
+  padding: 2px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid rgb(3, 3, 211);
+}
+
+.button1:hover {
+  background-color: #0c49c3;
+  color: white;
+}
+
+/* ////col-radius--in tax-calculator */
+.radius{
+  border: 1px #fff;
+  border-radius: 5px;
+}
+
+/* promotion card */
+.cardd{
+  width: auto;
+}
+
+
+/* email */
+.email-contain{
+  width: auto;
+
+}
+.email-card{
+  width: auto;
+  height: 288px;
+  border: 1px #fff;
+  border-radius: 16px;
+  
+margin-left: 165px;
+
+margin-right: auto;
+margin-top: 137.11px;
+margin-bottom: 5em;
+
+}
+
+.email-input-col{
+  width: 557px;
+  height: 152px;
+  padding-top: 56px;
+  margin-top: 3emx;
+margin-bottom: 3em;
+align-items: center
+ 
+
+}
+
+
+.footer-contain{
+  width: 100%;
+}
+
+
+
+.list{
+  list-style-type:none;
+}
+
+.iconss{
+  size: 2px;
+  margin-left: 5px;
+}
+
+
+#applicationForm {
+  max-width: 600px; /* Set a maximum width for the form */
+  margin: auto; /* Center the form on the page */
+  padding: 20px;
+}
+
+label, input, select, button {
+  display: block;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+
+/* Arrange 2 inputs in 1 row for desktop */
+@media screen and (min-width: 600px) {
+  label, input, select {
+    display: inline-block;
+    width: 48%; /* Adjust as needed */
+    margin-right: 2%; /* Adjust as needed */
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.bttn {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bttn:hover {
+  background-color: #45a049;
+}
+
+.resultContainer {
+  margin-top: 2px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+
+.two-column-container {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  margin: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+
+
+/* /// */
+/* Preloader.css */
+
+.preloader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.preloader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* calculate btn */
+.bt{
+  background-color: rgb(235, 249, 244);
+  border: 1px solid rgb(141, 248, 210);
+  width: 100%;
 }

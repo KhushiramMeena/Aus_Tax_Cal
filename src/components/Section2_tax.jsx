@@ -1,15 +1,15 @@
 "use client";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
-
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-
 import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Table,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 
 const Section2_tax = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -22,23 +22,20 @@ const Section2_tax = () => {
     // Set initial value
     handleResize();
 
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Tax calculator logic
+  // Tax calculator logic:-
 
   const [purchasePrice, setPurchasePrice] = useState("");
   const [salePrice, setSalePrice] = useState("");
   const [expenses, setExpenses] = useState("");
   const [investmentType, setInvestmentType] = useState("long");
-  const [annualIncome, setAnnualIncome] = useState("group1");
-  const [result, setResult] = useState("");
+  const [annualIncome, setAnnualIncome] = useState("group0");
 
   // Results variables
   const [taxRateResult, setTaxRateResult] = useState("");
@@ -48,30 +45,71 @@ const Section2_tax = () => {
   const [netCapitalGainsResult, setNetCapitalGainsResult] = useState("");
   const [taxToBePaidResult, setTaxToBePaidResult] = useState("");
 
+  // Tax rates
+  const getTaxRateDescription = () => {
+    switch (annualIncome) {
+      case "group1":
+        return " 0%";
+      case "group2":
+        return " Nil + 19% of excess over $18,200";
+      case "group3":
+        return " $5,092 + 32.5% of excess over $45,000";
+      case "group4":
+        return " $29,467 + 37% of excess over $120,000";
+      case "group5":
+        return " $51,667 + 45% of excess over $180,000";
+      default:
+        return "";
+    }
+  };
+
   const calculate = () => {
-    // Convert values to numbers
+    // values to numbers
     const purchasePriceNum = +purchasePrice;
     const salePriceNum = +salePrice;
     const expensesNum = +expenses;
 
-    // Compute capital gains
+    // capital gains
     const capitalGains = salePriceNum - purchasePriceNum - expensesNum;
     let discountForLongTermGains = 0;
+
     if (investmentType === "long" && capitalGains > 0) {
       discountForLongTermGains = capitalGains * 0.5;
     }
 
-    // Compute net capital gains
+    // net capital gains
     const netCapitalGains = capitalGains - discountForLongTermGains;
 
-    // Compute tax rate and tax to be paid
-    const taxRate = annualIncome === "group2" ? 0.325 : 0; // Adjust tax rate as necessary
+    // tax rate
+    let taxRate = 0;
+
+    switch (annualIncome) {
+      case "group1":
+        taxRate = 0;
+        break;
+      case "group2":
+        taxRate = 0.19;
+        break;
+      case "group3":
+        taxRate = 0.325;
+        break;
+      case "group4":
+        taxRate = 0.37;
+        break;
+      case "group5":
+        taxRate = 0.45;
+        break;
+      default:
+        break;
+    }
+
+    // tax to be paid
     const taxToBePaid = netCapitalGains * taxRate;
 
-    // Our results
-    setTaxRateResult(
-      `Tax Rate: $5092 + ${taxRate * 100}% of excess over $45000`
-    );
+    // Updating the tax rate result based on the selected income range
+    setTaxRateResult(` ${taxRate * 100}%`);
+
+    //updating other results
     setCapitalGainsResult(`${capitalGains}`);
     setDiscountForLongTermGainsResult(`${discountForLongTermGains}`);
     setNetCapitalGainsResult(`${netCapitalGains}`);
@@ -82,7 +120,6 @@ const Section2_tax = () => {
     <Container className=" mt-4">
       <Row>
         <Col sm={8}>
-          {/*//////////////////////// Tax-calculator /////////////////////////////////////////*/}
           <Row className="bg-white shadow-1-strong text-dark radius">
             <h2 className="text-center my-3">
               Free Crypto Tax Calculator for Australia
@@ -202,8 +239,9 @@ const Section2_tax = () => {
 
                   <Col>
                     <label htmlFor="investmentType">Investment Type:</label>
-                    <br />
+
                     <Form.Select
+                      className="mt-1"
                       style={{ backgroundColor: "#EFF2F5" }}
                       aria-label="Select investment type"
                       name="investmentType"
@@ -217,32 +255,41 @@ const Section2_tax = () => {
                   </Col>
                 </Row>
 
-                <Row className="mb-3">
-                  <Form.Group as={Col} md="6">
+                <Row className="mb-2">
+                  <div className="col-sm-6 ">
                     <label htmlFor="annualIncome">Annual Income:</label>
-                    <br />
-                    <Form.Select
-                      style={{ backgroundColor: "#EFF2F5" }}
-                      name="annualIncome"
-                      id="annualIncome"
-                      value={annualIncome}
-                      onChange={(e) => setAnnualIncome(e.target.value)}
-                    >
-                      <option active value="group1">
-                        Select income range
-                      </option>
-                      <option value="group2">$45,001 - $120,000</option>
-                      {/* other groups can be added here */}
-                    </Form.Select>
-                  </Form.Group>
+                    <Form.Group className="mt-1">
+                      <Form.Select
+                        style={{ backgroundColor: "#EFF2F5" }}
+                        name="annualIncome"
+                        id="annualIncome"
+                        value={annualIncome}
+                        onChange={(e) => setAnnualIncome(e.target.value)}
+                      >
+                        <option active value="group0">
+                          Select income range
+                        </option>
+                        <option value="group1">$0 - $18,200</option>
+                        <option value="group2">$18,201 - $45,000</option>
+                        <option value="group3">$45,001 - $120,000</option>
+                        <option value="group4">$120,001 - $180,000</option>
+                        <option value="group5">$180,001+</option>
 
-                  <Col>
-                    <p className="mt-4">
-                      Tax Rate
-                      <br />
-                      $5,902 + 32.5% of excess over $45001
-                    </p>
-                  </Col>
+                        {/* other groups can be added here */}
+                      </Form.Select>
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-6 ">
+                    <label>Tax Rate</label>
+                    <Form.Group className="1">
+                      <div
+                        style={{ fontSize: "12px" }}
+                        className="resultContainer form-control"
+                      >
+                        Tax Rate : {getTaxRateDescription()}
+                      </div>
+                    </Form.Group>
+                  </div>
                 </Row>
 
                 <button
@@ -254,8 +301,7 @@ const Section2_tax = () => {
                 </button>
               </Form>
 
-              {/* Results  */}
-
+              {/* results */}
               <div>
                 <Row className="mb-3">
                   <div className="col-sm-6 ">
@@ -294,45 +340,42 @@ const Section2_tax = () => {
                 </Row>
 
                 <div className="row my-2">
-                  <div className="col-sm-6">
-                    <div
-                      style={{
-                        backgroundColor: "#EBF9F4",
-                        border: "1px #EBF9F4",
-                      }}
-                      className="resultContainer form-control text-center"
-                    >
-                      <b>
-                        Net Capital Gain
-                        <br />
+                  <div className="col-sm-6 ">
+                    <Form.Group>
+                      <label>Net Capital Gain</label>
+                      <div
+                        style={{
+                          backgroundColor: "#EBF9F4",
+                          border: "1px #EBF9F4",
+                        }}
+                        className="resultContainer form-control text-center"
+                      >
                         <b style={{ color: "#0FBA83", fontSize: "24px" }}>
                           ${netCapitalGainsResult}
                         </b>
-                      </b>
-                    </div>
+                      </div>
+                    </Form.Group>
                   </div>
                   <div className="col-sm-6">
-                    <div
-                      style={{
-                        backgroundColor: "#EBF2FF",
-                        border: "1px #EBF2FF",
-                      }}
-                      className="resultContainer form-control text-center"
-                    >
-                      <b>
-                        The tax you need to pay*
-                        <br />
+                    <Form.Group>
+                      <label>The tax you need to pay*</label>
+                      <div
+                        style={{
+                          backgroundColor: "#EBF2FF",
+                          border: "1px #EBF2FF",
+                        }}
+                        className="resultContainer form-control text-center"
+                      >
                         <b style={{ color: "#0141CF", fontSize: "24px" }}>
                           ${taxToBePaidResult}
                         </b>{" "}
-                      </b>
-                    </div>
+                      </div>
+                    </Form.Group>
                   </div>
                 </div>
               </div>
             </Container>
           </Row>
-
           {/*//////////////////////// Tax-calculator-END /////////////////////////////////////////*/}
 
           {/*//////////////////////// FAQs /////////////////////////////////////////*/}
@@ -607,7 +650,7 @@ const Section2_tax = () => {
                             <td>0%</td>
                           </tr>
                           <tr>
-                            <td>$18,201 $45,000</td>
+                            <td>$18,201 - $45,000</td>
                             <td>Nil + 19% of the excess over $18,200</td>
                           </tr>
                           <tr>
@@ -669,7 +712,6 @@ const Section2_tax = () => {
               <Card.Body className="my-0">
                 <Card.Title>Get Started with KoinX </Card.Title>
                 <Card.Title className="my-2">for FREE</Card.Title>
-                {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
                 <Card.Text>
                   With our ranges of features that you can equip for free, KoinX
                   allow you to be more educated and aware of your tax reports.
@@ -699,7 +741,6 @@ const Section2_tax = () => {
                 <Card.Title className="my-2">
                   Track your portfolio & taxes
                 </Card.Title>
-                {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
                 <Card.Text>
                   With our ranges of features that you can equip for free, KoinX
                   allow you to be more educated and aware of your tax reports.

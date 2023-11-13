@@ -342,7 +342,7 @@ const Section2_tax = () => {
                 <div className="row my-2">
                   <div className="col-sm-6 ">
                     <Form.Group>
-                      <b className="text-center">Net Capital Gain</b>
+                     
                       <div
                         style={{
                           backgroundColor: "#EBF9F4",
@@ -350,6 +350,7 @@ const Section2_tax = () => {
                         }}
                         className="resultContainer form-control text-center"
                       >
+                         <p>Net Capital Gain</p>
                         <b style={{ color: "#0FBA83", fontSize: "24px" }}>
                           ${netCapitalGainsResult}
                         </b>
@@ -359,7 +360,7 @@ const Section2_tax = () => {
                   <div className="col-sm-6">
                     <Form.Group>
                      
-                      <b className="text-center">The tax you need to pay*</b>
+                     
                       <div
                         style={{
                           backgroundColor: "#EBF2FF",
@@ -367,6 +368,7 @@ const Section2_tax = () => {
                         }}
                         className="resultContainer form-control text-center"
                       >
+                         <p>The tax you need to pay*</p>
                         <b style={{ color: "#0141CF", fontSize: "24px" }}>
                           ${taxToBePaidResult}
                         </b>{" "}
